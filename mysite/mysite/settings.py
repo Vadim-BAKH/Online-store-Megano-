@@ -34,7 +34,7 @@ if not SECRET_KEY:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = getenv("DJANGO_DEBUG", "0") == "1"
 
-allowed_host_env = getenv("DJANGO_ALLOWED_HOSTS")
+allowed_host_env = getenv("DJANGO_ALLOWED_HOSTS", "")
 ALLOWED_HOSTS = [
     "0.0.0.0", "127.0.0.1", "localhost",
 ] + [

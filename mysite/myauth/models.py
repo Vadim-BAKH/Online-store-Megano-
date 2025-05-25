@@ -43,6 +43,14 @@ class Profile(models.Model):
         avatar (ImageField): Аватар пользователя.
     """
 
+    class Meta:
+        """
+        Метаданные модели Profile.
+
+        Задает порядок сортировки по полю fullName.
+        """
+        ordering = ("fullName",)
+
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE
     )
