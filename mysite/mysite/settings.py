@@ -229,6 +229,9 @@ STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 # STATICFILES_DIRS = [BASE_DIR / "frontend_static"]
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media_uploads"
+
 # LOGIN_REDIRECT_URL =
 # LOGIN_UR =
 
