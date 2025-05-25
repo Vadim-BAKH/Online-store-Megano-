@@ -18,14 +18,17 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
-from django.conf.urls.static import static
+from loguru import logger
+# from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("frontend.urls")),
+    # path("myauth/", include("myauth.urls")),
 ]
 
 if settings.DEBUG:
+    logger.debug(f"DEBAG: {settings.DEBUG}")
     urlpatterns.append(
         path("__debug__/", include("debug_toolbar.urls")),
     )

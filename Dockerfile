@@ -1,5 +1,6 @@
 FROM python:3.12-slim
 
+ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
@@ -16,8 +17,9 @@ COPY pyproject.toml poetry.lock README.md ./
 RUN poetry install --no-interaction --no-ansi --no-root
 
 COPY mysite .
+
+RUN mkdir -p frontend_static
 COPY diploma-frontend/dist/ .
-RUN mkdir "static"
 
 RUN pip install diploma-frontend-0.6.tar.gz
 

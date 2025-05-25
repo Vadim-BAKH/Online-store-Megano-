@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 import sys
 from os import getenv
+from dotenv import load_dotenv
 from pathlib import Path
 import sentry_sdk
 from loguru import logger
@@ -20,11 +21,12 @@ from django.urls import reverse_lazy
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+load_dotenv()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
+
+
 SECRET_KEY = getenv("DJANGO_SECRET_KEY")
 if not SECRET_KEY:
     raise Exception("DJANGO_SECRET_KEY environment variable not set!")
@@ -60,6 +62,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "frontend",
+    "myauth.apps.MyauthConfig",
+
     "corsheaders",
     "rest_framework",
     "drf_spectacular",
@@ -223,7 +227,7 @@ LOCALE_PATH = [BASE_DIR / "locale/"]
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [BASE_DIR / 'static']
+# STATICFILES_DIRS = [BASE_DIR / "frontend_static"]
 
 # LOGIN_REDIRECT_URL =
 # LOGIN_UR =

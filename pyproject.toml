@@ -26,6 +26,7 @@ dependencies = [
     "setuptools (>=80.4.0,<81.0.0)",
     "django-cors-headers (>=4.7.0,<5.0.0)",
     "asyncpg (>=0.30.0,<0.31.0)",
+    "dotenv (>=0.9.9,<0.10.0)",
 ]
 
 
@@ -42,4 +43,10 @@ pylint = "^3.3.7"
 isort = "^6.0.1"
 pytest-cov = "^6.1.1"
 flake8-docstrings = "^1.7.0"
+django-debug-toolbar = "^5.2.0"
 
+[tool.pylint."MESSAGES CONTROL"]
+disable = """
+    E1101,
+    W0613
+"""
