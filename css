@@ -1,0 +1,100 @@
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+      cookie = cookie.trim();
+      if (cookie.startsWith(name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+var mix = {
+  methods: {
+    signUp() {
+      const name = document.querySelector('#name').value;
+      const username = document.querySelector('#login').value;
+      const password = document.querySelector('#password').value;
+      this.postData('/api/sign-up/', JSON.stringify({ name, username, password }))
+        .then(({ data, status }) => {
+          location.assign('/profile/');
+        })
+        .catch(() => {
+          alert('Ошибка авторизации!');
+        });
+    },
+    postData(url = '', data = {}) {
+      return fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken')
+        },
+        credentials: 'include', // важно для передачи куки сессии
+        body: data
+      }).then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+      });
+    }
+  },
+  mounted() {},
+  data() {
+    return {};
+  }
+}
+
+
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+      cookie = cookie.trim();
+      if (cookie.startsWith(name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+var mix = {
+  methods: {
+    signIn() {
+      const username = document.querySelector('#login').value;
+      const password = document.querySelector('#password').value;
+      this.postData('/api/sign-in/', JSON.stringify({ username, password }))
+        .then(({ data, status }) => {
+          location.assign('/profile/');
+        })
+        .catch(() => {
+          alert('Ошибка авторизации!');
+        });
+    },
+    postData(url = '', data = {}) {
+      return fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken')
+        },
+        credentials: 'include',  // Важно для передачи куки сессии
+        body: data
+      }).then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+      });
+    }
+  },
+  mounted() {},
+  data() {
+    return {};
+  }
+}

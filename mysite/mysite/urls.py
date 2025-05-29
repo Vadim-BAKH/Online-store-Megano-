@@ -19,16 +19,18 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from loguru import logger
-# from django.conf.urls.static import static
+import debug_toolbar
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("frontend.urls")),
-    # path("myauth/", include("myauth.urls")),
+    path("api/", include("myauth.urls")),
 ]
 
 if settings.DEBUG:
-    logger.debug(f"DEBAG: {settings.DEBUG}")
-    urlpatterns.append(
-        path("__debug__/", include("debug_toolbar.urls")),
-    )
+
+    logger.debug(f"DEBUG: {settings.DEBUG}")
+    urlpatterns = [
+        path("__debug__/", include(debug_toolbar.urls)),
+    ] + urlpatterns

@@ -21,6 +21,6 @@ COPY mysite .
 RUN mkdir -p frontend_static
 COPY diploma-frontend/dist/ .
 
-RUN pip install diploma-frontend-0.6.tar.gz
+RUN pip install diploma_frontend-0.6.tar.gz
 
 EXPOSE 8000

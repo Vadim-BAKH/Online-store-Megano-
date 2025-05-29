@@ -19,6 +19,7 @@ createApp({
 			return cookieValue
 		},
 		postData(url, payload, headers = {}) {
+		    console.log('POST запрос на URL:', url);
 			return axios
 				.post(url, payload, {
 					headers: {
@@ -31,7 +32,7 @@ createApp({
 						data: response?.data,
 						status: response.status,
 					}
-					return response.data ? response.data : response.json?.()
+//					return response.data ? response.data : response.json?.()
 				})
 				.catch((error) => {
 					console.warn(
@@ -63,7 +64,7 @@ createApp({
 				})
 		},
 		getBasket() {
-			this.getData('/api/basket')
+			this.getData('/api/basket/')
 				.then((data) => {
 					const basket = {}
 					data.forEach((item) => {
@@ -95,7 +96,7 @@ createApp({
 		// },
 		addToBasket(item, count = 1) {
 			const { id } = item
-			this.postData('/api/basket', { id, count })
+			this.postData('/api/basket/', { id, count })
 				.then(({ data }) => {
 					this.basket = data
 				})
@@ -105,7 +106,7 @@ createApp({
 		},
 		removeFromBasket(id, count) {
 			axios
-				.delete('/api/basket', {
+				.delete('/api/basket/', {
 					data: JSON.stringify({ id, count }),
 					headers: {
 						'X-CSRFToken': this.getCookie('csrftoken'),
@@ -120,7 +121,7 @@ createApp({
 				})
 		},
 		signOut() {
-			this.postData('/api/sign-out').finally(() => {
+			this.postData('/api/sign-out/').finally(() => {
 				location.assign(`/`)
 			})
 		},

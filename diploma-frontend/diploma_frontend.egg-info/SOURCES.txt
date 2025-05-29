@@ -304,4 +304,6 @@ frontend/templates/frontend/profileAvatar.html
 frontend/templates/frontend/progressPayment.html
 frontend/templates/frontend/sale.html
 frontend/templates/frontend/signIn.html
+frontend/templates/frontend/signIn_form.html
 frontend/templates/frontend/signUp.html
+frontend/templates/frontend/signUp_form.html

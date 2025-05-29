@@ -13,11 +13,11 @@ services:
     ports:
       - "5432:5432"
 
-  redis:
-    container_name: redis
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
+#  redis:
+#    container_name: redis
+#    image: redis:7-alpine
+#    ports:
+#      - "6379:6379"
 
   app:
     container_name: app
@@ -32,14 +32,13 @@ services:
              "
     restart: always
     depends_on:
-      - redis
+#      - redis
       - db
     env_file:
       - .env
     volumes:
       - ./staticfiles:/app/staticfiles
-      - ./media_uploads:/app/media_uploads   # монтируем медиа
-
+      - ./media_uploads:/app/media_uploads
     ports:
       - "8000:8000"
     logging:
@@ -79,27 +78,27 @@ services:
 #    ports:
 #      - "3100:3100"
 
-  adminer:
-    image: adminer
-    container_name: adminer
-    restart: always
-    ports:
-      - "8080:8080"
-
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-    ports:
-      - "5050:80"
-
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
+#  adminer:
+#    image: adminer
+#    container_name: adminer
+#    restart: always
+#    ports:
+#      - "8080:8080"
+#
+#  pgadmin:
+#    image: dpage/pgadmin4
+#    container_name: pgadmin
+#    restart: always
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+#      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+#      PGADMIN_CONFIG_SERVER_MODE: 'False'
+#    ports:
+#      - "5050:80"
+#
+#    volumes:
+#      - pgadmin_data:/var/lib/pgadmin
 
 volumes:
   postgres_data:
-  pgadmin_data:
+#  pgadmin_data:

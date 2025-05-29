@@ -2,7 +2,7 @@ var mix = {
 	methods: {
 		getOrder(orderId) {
 			if(typeof orderId !== 'number') return
-			this.getData(`/api/order/${orderId}`)
+			this.getData(`/api/order/${orderId}/`)
 				.then(data => {
 					this.orderId = data.id
 					this.createdAt = data.createdAt
@@ -37,7 +37,7 @@ var mix = {
 		auth() {
 			const username = document.querySelector('#username').value
 			const password = document.querySelector('#password').value
-			this.postData('/api/sign-in', JSON.stringify({ username, password }))
+			this.postData('/api/sign-in/', JSON.stringify({ username, password }))
 				.then(({ data, status }) => {
 					location.assign(`/orders/${this.orderId}`)
 				})

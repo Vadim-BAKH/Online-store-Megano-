@@ -1,38 +1,41 @@
 """Формы для действий с профилем пользователя"""
+from django import forms
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import get_user_model
 
-# from django.contrib.auth.forms import UserCreationForm
-# from django.conf import settings
-#
-# from django.forms import (BooleanField, CharField, EmailField, ImageField,
-#                           ModelForm)
-#
-# from .models import Profile
-#
-#
-# class UserRegisterForm(UserCreationForm):
-#     """
-#     Форма регистрации пользователя с дополнительными полями.
-#     """
-#
-#     class Meta:
-#         model = Profile
-#         fields = (
-#             "username",
-#             "password1",
-#             "password2",
-#             "first_name",
-#             "last_name",
-#             "email",
-#         )
-#
-#     first_name = CharField(max_length=50, required=False, label="First name")
-#     last_name = CharField(max_length=50, required=False, label="Last name")
-#     email = EmailField(required=True, label="Email")
-#     position = CharField(max_length=100, required=True)
-#     avatar = ImageField(required=False)
-#
-#
-#
+from django.conf import settings
+
+from django.forms import (BooleanField, CharField, EmailField, ImageField,
+                          ModelForm)
+
+from .models import Profile
+
+User = get_user_model()
+
+class UserRegisterForm(forms.ModelForm):
+    name = forms.CharField(max_length=150, required=False, label="Имя")
+    password = forms.CharField(widget=forms.PasswordInput, label="Пароль")
+
+    class Meta:
+        model = User
+        fields = ("username",)
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.username = self.cleaned_data["username"]
+        user.first_name = self.cleaned_data["name"]
+        user.set_password(self.cleaned_data["password"])
+        if commit:
+            user.save()
+        return user
+
+class UserLoginForm(AuthenticationForm):
+    """Форма аутентификации."""
+
+    # avatar = ImageField(required=False)
+
+
+
 # class AvatarUpdateForm(ModelForm):
 #     """Форма для обновления аватара пользователя."""
 #

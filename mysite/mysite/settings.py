@@ -12,11 +12,16 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 import sys
 from os import getenv
+
+
 from dotenv import load_dotenv
 from pathlib import Path
 import sentry_sdk
 from loguru import logger
 from django.urls import reverse_lazy
+import mimetypes
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,8 +46,10 @@ ALLOWED_HOSTS = [
     host for host in allowed_host_env.split(",") if host
 ]
 
+mimetypes.add_type("application/javascript", ".js", True)
+
 INTERNAL_IPS = [
-    "127.0.0.1",
+    "127.0.0.1"
 ]
 
 if DEBUG:
@@ -64,6 +71,7 @@ INSTALLED_APPS = [
     "frontend",
     "myauth.apps.MyauthConfig",
 
+    "adrf",
     "corsheaders",
     "rest_framework",
     "drf_spectacular",
@@ -83,6 +91,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.contrib.admindocs.middleware.XViewMiddleware",
+    "mysite.middleware.AppendSlashMiddleware",
 ]
 
 # Документация по CORS и django-cors-headers:
@@ -232,8 +241,10 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media_uploads"
 
-# LOGIN_REDIRECT_URL =
-# LOGIN_UR =
+LOGIN_REDIRECT_URL = reverse_lazy("api:about_me")
+LOGIN_URL = reverse_lazy("api:login")
+
+# APPEND_SLASH = False
 
 LOGLEVEL = getenv("LOGLEVEL", "INFO").upper()
 logger.remove()
@@ -279,3 +290,11 @@ PASSWORD_HASHERS = [
 #     SECURE_HSTS_PRELOAD = True
 #     SECURE_BROWSER_XSS_FILTER = True
 #     SECURE_CONTENT_TYPE_NOSNIFF = True
+
+def show_toolbar(request):
+    return True
+
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+    "INTERCEPT_REDIRECTS": False,
+}

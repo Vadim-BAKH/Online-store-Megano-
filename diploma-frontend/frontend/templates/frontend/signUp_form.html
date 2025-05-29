@@ -1,0 +1,28 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="Auth">
+    <div class="wrapper">
+        <h3 class="sign-in">Регистрация</h3>
+        <form method="post" action="" novalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div>
+                {{ form.name.errors }}
+                <input class="user-input" type="text" name="{{ form.name.html_name }}" id="name" placeholder="Имя" value="{{ form.name.value|default_if_none:'' }}" />
+            </div>
+            <div>
+                {{ form.username.errors }}
+                <input class="user-input" type="text" name="{{ form.username.html_name }}" id="login" placeholder="Логин" value="{{ form.username.value|default_if_none:'' }}" required autofocus/>
+            </div>
+            <div>
+                {{ form.password.errors }}
+                <input type="password" name="{{ form.password.html_name }}" id="password" placeholder="Пароль" required/>
+            </div>
+            <input type="submit" value="Создать аккаунт"/>
+            <a class="sub-link" href="{% url 'api:login' %}">Войти</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

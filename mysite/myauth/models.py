@@ -6,19 +6,19 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_user_profile(sender, instance, created, **kwargs) -> None:
-    """
-    Обработчик post_save для User.
-
-    :param sender: Класс модели, отправивший сигнал.
-    :param instance: Экземпляр сохранённого пользователя.
-    :param created: True, если объект создан впервые.
-    :param kwargs: Дополнительные аргументы.
-    :return: None
-    """
-    if created:
-        Profile.objects.create(user=instance)
+# @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+# def create_user_profile(sender, instance, created, **kwargs) -> None:
+#     """
+#     Обработчик post_save для User.
+#
+#     :param sender: Класс модели, отправивший сигнал.
+#     :param instance: Экземпляр сохранённого пользователя.
+#     :param created: True, если объект создан впервые.
+#     :param kwargs: Дополнительные аргументы.
+#     :return: None
+#     """
+#     if created:
+#         Profile.objects.create(user=instance)
 
 
 def profile_avatars_directory_path(instance: "Profile", filename: str) -> str:
@@ -60,5 +60,9 @@ class Profile(models.Model):
         max_length=12, unique=True, null=True, blank=True, default=""
     )
     avatar = models.ImageField(
-        null=True, upload_to=profile_avatars_directory_path
+        null=True, blank=True, upload_to=profile_avatars_directory_path
     )
+
+    def __str__(self) -> str:
+        """Возвращает строковое представление объекта."""
+        return f"User: {self.user}"

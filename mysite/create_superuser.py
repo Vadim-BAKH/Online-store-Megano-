@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-username = getenv("DJANGO_SUPERUSER_USERNAME")  # или из переменных окружения
+username = getenv("DJANGO_SUPERUSER_USERNAME")
 email = getenv("DJANGO_SUPERUSER_EMAIL")
 password = getenv("DJANGO_SUPERUSER_PASSWORD")
 
