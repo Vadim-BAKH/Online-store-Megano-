@@ -29,7 +29,7 @@ def profile_avatars_directory_path(instance: "Profile", filename: str) -> str:
     :param filename: Имя загружаемого файла.
     :return: Путь для сохранения файла.
     """
-    return f"media_uploads/images_{instance.pk}/avatar/{filename}"
+    return f"images_{instance.pk}/avatar/{filename}"
 
 
 class Profile(models.Model):

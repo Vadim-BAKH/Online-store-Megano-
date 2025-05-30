@@ -91,7 +91,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.contrib.admindocs.middleware.XViewMiddleware",
-    "mysite.middleware.AppendSlashMiddleware",
 ]
 
 # Документация по CORS и django-cors-headers:
@@ -157,7 +156,7 @@ TEMPLATES = [
     },
 ]
 
-ASGI_APPLICATION = "mysite.asgi.application"
+WSGI_APPLICATION = "mysite.wsgi.application"
 
 
 # Database
@@ -241,7 +240,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media_uploads"
 
-LOGIN_REDIRECT_URL = reverse_lazy("api:about_me")
+LOGIN_REDIRECT_URL = reverse_lazy("api:profile_update")
 LOGIN_URL = reverse_lazy("api:login")
 
 # APPEND_SLASH = False
