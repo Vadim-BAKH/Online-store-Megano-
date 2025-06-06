@@ -1,0 +1,137 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1>Редактирование профиля</h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item"><a href="/">Home</a></li>
+            <li class="breadcrumbs-item"><a href="{% url 'api:personal_office' %}">Личный кабинет</a></li>
+            <li class="breadcrumbs-item breadcrumbs-item_current"><span>Редактирование профиля</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="Section Section_column Section_columnLeft">
+      <div class="wrap">
+        <div class="Section-column">
+          <div class="Section-columnSection">
+            <header class="Section-header">
+              <strong class="Section-title">Навигация</strong>
+            </header>
+            <div class="Section-columnContent">
+              <div class="NavigateProfile">
+                <ul class="menu menu_vt">
+                  <li class="menu-item"><a class="menu-link" href="{% url 'api:profile_update' %}">Профиль</a></li>
+                  <li class="menu-item"><a class="menu-link" href="/history-order">История заказов</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="Section-content">
+          <div class="Profile">
+            <div class="row">
+
+              <!-- Форма обновления профиля -->
+              <div class="row-block">
+               <p>
+                 <a href="{% url 'api:personal_office' %}">← Вернуться в личный кабинет</a>
+               </p>
+                <form method="post" action="{% url 'api:profile_update' %}" enctype="multipart/form-data" novalidate>
+                  {% csrf_token %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <div class="message {{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                  {% endif %}
+
+                  <div class="form-group {% if avatar_form.avatar.errors %}error{% endif %}">
+                    <label for="{{ avatar_form.avatar.id_for_label }}">Аватар</label>
+                    {% if profile.avatar %}
+                      <div class="Profile-img" style="margin-bottom:10px;">
+                        <img src="{{ profile.avatar.url }}" alt="avatar" style="max-width:150px;"/>
+                      </div>
+                    {% endif %}
+                    {{ avatar_form.avatar }}
+                    {{ avatar_form.avatar.errors }}
+                  </div>
+
+                  <div class="form-group {% if profile_form.fullName.errors %}error{% endif %}">
+                    <label for="{{ profile_form.fullName.id_for_label }}">ФИО</label>
+                    {{ profile_form.fullName }}
+                    {{ profile_form.fullName.errors }}
+                  </div>
+
+                  <div class="form-group {% if profile_form.phone.errors %}error{% endif %}">
+                    <label for="{{ profile_form.phone.id_for_label }}">Телефон</label>
+                    {{ profile_form.phone }}
+                    {{ profile_form.phone.errors }}
+                  </div>
+
+                  <div class="form-group {% if profile_form.email.errors %}error{% endif %}">
+                    <label for="{{ profile_form.email.id_for_label }}">E-mail</label>
+                    {{ profile_form.email }}
+                    {{ profile_form.email.errors }}
+                  </div>
+
+                  <button type="submit" class="btn btn_success">Сохранить профиль</button>
+                </form>
+
+              </div>
+
+              <!-- Форма смены пароля (оставьте как есть) -->
+              <div class="row-block">
+                <form method="post" action="{% url 'api:password_update' %}" novalidate>
+                  {% csrf_token %}
+                  <h2>Смена пароля</h2>
+                  {% if password_form.non_field_errors %}
+                    <div class="form-errors">
+                      <ul>
+                        {% for error in password_form.non_field_errors %}
+                          <li>{{ error }}</li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  {% endif %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <div class="message {{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                  {% endif %}
+
+                  <div class="form-group {% if password_form.passwordCurrent.errors %}error{% endif %}">
+                    <label for="{{ password_form.passwordCurrent.id_for_label }}">Текущий пароль</label>
+                    {{ password_form.passwordCurrent }}
+                    {{ password_form.passwordCurrent.errors }}
+                  </div>
+
+                  <div class="form-group {% if password_form.password.errors %}error{% endif %}">
+                    <label for="{{ password_form.password.id_for_label }}">Пароль</label>
+                    {{ password_form.password }}
+                    {{ password_form.password.errors }}
+                  </div>
+
+                  <div class="form-group {% if password_form.passwordReply.errors %}error{% endif %}">
+                    <label for="{{ password_form.passwordReply.id_for_label }}">Подтверждение пароля</label>
+                    {{ password_form.passwordReply }}
+                    {{ password_form.passwordReply.errors }}
+                  </div>
+
+                  <button type="submit" class="btn btn_success">Сменить пароль</button>
+                </form>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -2,8 +2,11 @@
 
 from django.conf import settings
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+
+from  shop.models import SoftDeleteModel
+
+# from django.db.models.signals import post_save
+# from django.dispatch import receiver
 
 
 # @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -32,7 +35,7 @@ def profile_avatars_directory_path(instance: "Profile", filename: str) -> str:
     return f"images_{instance.pk}/avatar/{filename}"
 
 
-class Profile(models.Model):
+class Profile(SoftDeleteModel):
     """
     Модель профиля пользователя.
 

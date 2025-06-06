@@ -1,0 +1,117 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="Middle Middle_top">
+    <div class="Middle-top">
+        <div class="wrap">
+            <div class="Middle-header">
+                <h1 class="Middle-title">Таблица товаров</h1>
+                <ul class="breadcrumbs Middle-breadcrumbs">
+                    <li class="breadcrumbs-item"><a href="/">home</a></li>
+                    <li class="breadcrumbs-item"><a href="{% url 'api:personal_office' %}">Личный кабинет</a></li>
+                    <li class="breadcrumbs-item"><a href="{% url 'shop:create_product' %}">Создать товар</a></li>
+                    <li class="breadcrumbs-item"><a href="{% url 'shop:delete_product' %}">Архивировать товар</a></li>
+                    <li class="breadcrumbs-item"><a href="{% url 'shop:return_product' %}">Разархивировать товар</a></li>
+                </ul>
+            </div>
+
+            {% if messages %}
+              <div class="Messages">
+                {% for message in messages %}
+                  <div class="message {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+              </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="Section">
+        <div class="wrap">
+            <div class="TableWrapper">
+                <table class="Table">
+                    <thead>
+                        <tr>
+                            <th>№№</th>
+                            <th>Название</th>
+                            <th>Цена</th>
+                            <th>Количество</th>
+                            <th>Категория</th>
+                            <th>Подкатегория</th>
+                            <th>Дата добавления</th>
+                            <th>Архивирован</th>
+                            <th>Редактировать</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'shop:update_product' product.pk %}">
+                                    {{ product.pk }}
+                                </a>
+                            </td>
+                            <td>{{ product.title }}</td>
+                            <td>{{ product.price|floatformat:2 }} ₽</td>
+                            <td>{{ product.count }}</td>
+                            <td>
+                                {% if product.category.parent %}
+                                    {{ product.category.parent.title }}
+                                {% else %}
+                                    {{ product.category.title }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if product.category.parent %}
+                                    {{ product.category.title }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td>{{ product.date|date:"d.m.Y H:i" }}</td>
+                            <td>
+                                {% if product.is_deleted %}
+                                    Да
+                                {% else %}
+                                    Нет
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'shop:update_product' product.pk %}" class="btn btn-edit">✏️</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="9" class="text-center">
+                                Товаров нет. Для создания воспользуйтесь "Создать товар"
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                {% if is_paginated %}
+                <div class="Pagination">
+                    {% if page_obj.has_previous %}
+                        <a class="Pagination-item" href="?page={{ page_obj.previous_page_number }}">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    {% endif %}
+
+                    <span class="Pagination-current">
+                        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a class="Pagination-item" href="?page={{ page_obj.next_page_number }}">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

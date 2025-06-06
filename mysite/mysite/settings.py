@@ -70,8 +70,8 @@ INSTALLED_APPS = [
 
     "frontend",
     "myauth.apps.MyauthConfig",
+    "shop.apps.ShopConfig",
 
-    "adrf",
     "corsheaders",
     "rest_framework",
     "drf_spectacular",

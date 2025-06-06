@@ -21,12 +21,23 @@ from django.urls import path, include
 from loguru import logger
 import debug_toolbar
 
+from shop.views import ProductCatalogAPIView, TagListAPIView, CategoryApiView
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("frontend.urls")),
     path("api/", include("myauth.urls")),
+    path("shop/", include("shop.urls")),
 ]
+
+
+urlpatterns += [
+    path('api/catalog/', ProductCatalogAPIView.as_view(), name='api_catalog_root'),
+    path('api/tags/', TagListAPIView.as_view(), name='api_tags_root'),
+    path('api/categories/', CategoryApiView.as_view(), name='api_categories'),
+]
+
 
 if settings.DEBUG:
 

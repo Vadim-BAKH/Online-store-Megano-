@@ -1,0 +1,79 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1>Личный кабинет</h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item"><a href="/">Home</a></li>
+            <li class="breadcrumbs-item breadcrumbs-item_current"><span>Личный кабинет</span></li>
+             <li class="breadcrumbs-item"><a href="{% url 'api:profile_update' %}">Редактирование профиля</a></li>
+             {% if user.is_staff %}
+             <li class="breadcrumbs-item"><a href="{% url 'shop:products_table' %}">Таблица товаров</a></li>
+             <li class="breadcrumbs-item"><a href="{% url 'shop:create_product' %}">Создать товар</a></li>
+             <li class="breadcrumbs-item"><a href="{% url 'shop:delete_product' %}">Архивировать товар</a></li>
+             <li class="breadcrumbs-item"><a href="{% url 'shop:return_product' %}">Разархивировать товар</a></li>
+             {% endif %}
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="Section Section_column Section_columnLeft">
+      <div class="wrap">
+        <div class="Section-column">
+          <div class="Section-columnSection">
+            <header class="Section-header">
+              <strong class="Section-title">Навигация</strong>
+            </header>
+            <div class="Section-columnContent">
+              <div class="NavigateProfile">
+                <ul class="menu menu_vt">
+                  <li class="menu-item"><a class="menu-link" href="{% url 'api:profile_update' %}">Профиль</a></li>
+                  <li class="menu-item"><a class="menu-link" href="/history-order">История заказов</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="Section-content">
+          <div class="Profile">
+            <div class="row">
+
+              <!-- Информация профиля -->
+              <div class="row-block">
+                <div>
+                  {% if profile.avatar %}
+                    <img src="{{ profile.avatar.url }}" alt="Аватар" style="max-width:150px; margin-bottom:10px;">
+                  {% endif %}
+                  <p><strong>ФИО:</strong> {{ profile.fullName }}</p>
+<!--                  <a href="{% url 'api:profile_update' %}">Редактировать профиль</a>-->
+                </div>
+              </div>
+
+              <!-- Последний заказ -->
+              <div class="row-block">
+                {% if last_order %}
+                  <h2>Последний заказ</h2>
+                  <p>Номер заказа: {{ last_order.id }}</p>
+                  <p>Дата: {{ last_order.date }}</p>
+                  <a href="{% url 'order_detail' last_order.id %}">Детали заказа</a><br>
+                  <a href="{% url 'order_history' %}">История заказов</a>
+                {% else %}
+                  <p>У вас пока нет заказов.</p>
+                {% endif %}
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

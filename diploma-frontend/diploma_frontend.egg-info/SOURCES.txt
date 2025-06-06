@@ -300,12 +300,8 @@ frontend/templates/frontend/password_update.html
 frontend/templates/frontend/payment.html
 frontend/templates/frontend/paymentsomeone.html
 frontend/templates/frontend/product.html
-frontend/templates/frontend/profile.html
 frontend/templates/frontend/profileAvatar.html
-frontend/templates/frontend/profile_forms.html
 frontend/templates/frontend/progressPayment.html
 frontend/templates/frontend/sale.html
-frontend/templates/frontend/signIn.html
 frontend/templates/frontend/signIn_form.html
-frontend/templates/frontend/signUp.html
 frontend/templates/frontend/signUp_form.html

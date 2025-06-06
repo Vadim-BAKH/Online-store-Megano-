@@ -31,7 +31,7 @@ var mix = {
         },
         getTags() {
             this.getData('/api/tags/', { category: this.category })
-                .then(data => this.topTags = data.map(tag => ({
+                .then(data => this.topTags = data.results.map(tag => ({
                     ...tag,
                     selected: false
                 })))
@@ -81,8 +81,9 @@ var mix = {
             :  null
 
         if(location.pathname.startsWith('/catalog/')) {
-            const category = location.pathname.replace('/catalog/', '').replace('/', '')
+            let category = location.pathname.slice('/catalog/'.length).replace(/\/$/, '')
             this.category = category.length ? Number(category) : null
+            if (isNaN(this.category)) this.category = null
         }
 
         this.getCatalogs()

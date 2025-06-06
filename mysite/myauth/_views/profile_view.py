@@ -32,4 +32,4 @@ def profile_update_view(request):
         'password_form': password_form,
         'profile': profile,
     }
-    return render(request, 'frontend/profile_forms.html', context)
+    return render(request, 'myauth/profile_update.html', context)

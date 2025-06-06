@@ -1,0 +1,101 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title">
+            {% if product %}
+              Редактирование товара
+            {% else %}
+              Создание товара
+            {% endif %}
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item"><a href="/">home</a></li>
+            <li class="breadcrumbs-item"><a href="{% url 'api:personal_office' %}">Личный кабинет</a></li>
+            <li class="breadcrumbs-item"><a href="{% url 'shop:products_table' %}">Таблица товаров</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="Section Section_column">
+      <div class="wrap">
+        <div class="row">
+
+          <div class="Section-content" style="width: 100%;">
+            <div class="Product">
+              <div class="row-block">
+                <h2>
+                  {% if product %}
+                    Редактировать товар
+                  {% else %}
+                    Создать новый товар
+                  {% endif %}
+                </h2>
+                <form method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+
+                  {% if form.non_field_errors %}
+                    <div class="form-errors">
+                      <ul>
+                        {% for error in form.non_field_errors %}
+                          <li>{{ error }}</li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  {% endif %}
+
+                  <p>{{ form.category.label_tag }}<br>{{ form.category }}</p>
+                  <p>
+                    {{ form.subcategory.label_tag }}<br>
+                    {{ form.subcategory }}
+                    <small class="help-text">{{ form.subcategory.help_text }}</small>
+                  </p>
+                  <p>{{ form.new_category.label_tag }}<br>{{ form.new_category }}</p>
+                  <p>{{ form.new_category_image.label_tag }}<br>{{ form.new_category_image }}</p>
+                  <p>{{ form.new_category_alt.label_tag }}<br>{{ form.new_category_alt }}</p>
+                  <p>{{ form.new_subcategory.label_tag }}<br>{{ form.new_subcategory }}</p>
+                  <p>{{ form.new_subcategory_image.label_tag }}<br>{{ form.new_subcategory_image }}</p>
+                  <p>{{ form.new_subcategory_alt.label_tag }}<br>{{ form.new_subcategory_alt }}</p>
+                  <p>{{ form.price.label_tag }}<br>{{ form.price }}</p>
+                  <p>{{ form.count.label_tag }}<br>{{ form.count }}</p>
+                  <p>{{ form.title.label_tag }}<br>{{ form.title }}</p>
+                  <p>{{ form.description.label_tag }}<br>{{ form.description }}</p>
+                  <p>{{ form.fullDescription.label_tag }}<br>{{ form.fullDescription }}</p>
+                  <p>{{ form.freeDelivery.label_tag }}<br>{{ form.freeDelivery }}</p>
+                  <p>{{ form.tags.label_tag }}<br>{{ form.tags }}</p>
+                  <p>{{ form.new_tags.label_tag }}<br>{{ form.new_tags }}</p>
+
+                  <h3>Изображения товара</h3>
+                  {{ image_formset.management_form }}
+                  {% for img_form in image_formset %}
+                    {{ img_form.as_p }}
+                  {% endfor %}
+
+                  <h3>Спецификации товара</h3>
+                  {{ spec_formset.management_form }}
+                  {% for spec_form in spec_formset %}
+                    {{ spec_form.as_p }}
+                  {% endfor %}
+
+                  <button type="submit" class="btn btn_success">
+                    {% if product %}
+                      Сохранить изменения
+                    {% else %}
+                      Создать товар
+                    {% endif %}
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+        </div> <!-- /.row -->
+      </div> <!-- /.wrap -->
+    </div> <!-- /.Section_column -->
+  </div>
+{% endblock %}
