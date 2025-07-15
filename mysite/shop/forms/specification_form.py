@@ -1,12 +1,23 @@
+"""Форма и формсет для характеристик товара (Specification)."""
+
 from django.forms import ModelForm, inlineformset_factory
 
-from .._models import Specification, Product
+from .._models import Product, Specification
 
 
 class SpecificationForm(ModelForm):
+
+    """Форма для одной характеристики товара."""
+
     class Meta:
+
+        """Метаданные модели с полями."""
+
         model = Specification
-        fields = ('name', 'value',)
+        fields = (
+            "name",
+            "value",
+        )
 
 
 SpecificationFormSet = inlineformset_factory(
