@@ -1,0 +1,150 @@
+[
+  {
+    "model": "shop.product",
+    "pk": 1,
+    "fields": {
+      "is_deleted": false,
+      "category": 2,
+      "price": "55.00",
+      "count": 20,
+      "date": "2025-07-11T11:21:23.967Z",
+      "title": "Бородинский",
+      "description": "Заварной с тмином на меду.",
+      "fullDescription": "Старинный русский рецепт",
+      "freeDelivery": true,
+      "limited_edition": false,
+      "sort_index": 0,
+      "tags": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 2,
+    "fields": {
+      "is_deleted": false,
+      "category": 2,
+      "price": "80.00",
+      "count": 5,
+      "date": "2025-07-11T11:25:25.381Z",
+      "title": "Даниловский",
+      "description": "Заварной с зернами",
+      "fullDescription": "",
+      "freeDelivery": false,
+      "limited_edition": true,
+      "sort_index": 0,
+      "tags": [
+        4,
+        5
+      ]
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 3,
+    "fields": {
+      "is_deleted": false,
+      "category": 3,
+      "price": "100.00",
+      "count": 5,
+      "date": "2025-07-11T11:29:09.708Z",
+      "title": "Имбирные",
+      "description": "Имбирь на меду",
+      "fullDescription": "Очень вкусные",
+      "freeDelivery": false,
+      "limited_edition": false,
+      "sort_index": 0,
+      "tags": [
+        6,
+        7
+      ]
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 4,
+    "fields": {
+      "is_deleted": false,
+      "category": 3,
+      "price": "95.00",
+      "count": 100,
+      "date": "2025-07-11T11:32:07.538Z",
+      "title": "Тульские",
+      "description": "Тает во рту",
+      "fullDescription": "",
+      "freeDelivery": false,
+      "limited_edition": false,
+      "sort_index": 0,
+      "tags": [
+        8,
+        9
+      ]
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 5,
+    "fields": {
+      "is_deleted": false,
+      "category": 5,
+      "price": "150.00",
+      "count": 5,
+      "date": "2025-07-11T11:35:52.769Z",
+      "title": "Прага",
+      "description": "От Палыча",
+      "fullDescription": "Вкусный",
+      "freeDelivery": false,
+      "limited_edition": true,
+      "sort_index": 0,
+      "tags": [
+        10
+      ]
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 6,
+    "fields": {
+      "is_deleted": false,
+      "category": 6,
+      "price": "105.00",
+      "count": 5,
+      "date": "2025-07-11T11:46:11.087Z",
+      "title": "Эскимо",
+      "description": "Домашнее на палочке",
+      "fullDescription": "",
+      "freeDelivery": false,
+      "limited_edition": true,
+      "sort_index": 0,
+      "tags": [
+        11,
+        12
+      ]
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 7,
+    "fields": {
+      "is_deleted": false,
+      "category": 7,
+      "price": "110.00",
+      "count": 25,
+      "date": "2025-07-11T12:01:08.767Z",
+      "title": "Эклер черничный",
+      "description": "Заварной и вкусный",
+      "fullDescription": "",
+      "freeDelivery": false,
+      "limited_edition": false,
+      "sort_index": 0,
+      "tags": [
+        13,
+        14,
+        15
+      ]
+    }
+  }
+]

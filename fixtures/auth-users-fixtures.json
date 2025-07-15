@@ -1,0 +1,56 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "argon2$argon2id$v=19$m=102400,t=2,p=8$RWE2czd2YVlnT0x6OVBUUEtFY1pwUQ$yN55AeiU+kKGpBnd8s6KaMhawBxVHwu/jeG0wokEHJs",
+      "last_login": "2025-07-11T14:07:44.190Z",
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "admin@example.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2025-07-11T11:07:41.327Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "argon2$argon2id$v=19$m=102400,t=2,p=8$dVJFemVCMEowcnY5d0RyVDFCdlVsYw$a4Jr6u91HLJ1cUul0JU07JPHIDsB1QTAMIHMU9H5BrE",
+      "last_login": "2025-07-11T12:13:27.011Z",
+      "is_superuser": false,
+      "username": "owl",
+      "first_name": "Сова",
+      "last_name": "",
+      "email": "ol@mail.ru",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-07-11T12:05:20Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "password": "argon2$argon2id$v=19$m=102400,t=2,p=8$TjJoTzdObVJRMGxHS0M3M2tOV3BLWg$mIrVGl+OJ+dDb4Qb7aKzVIxLZHiIH+VzuMk7cefyw40",
+      "last_login": "2025-07-11T12:15:10Z",
+      "is_superuser": false,
+      "username": "tiger",
+      "first_name": "Тигр Тигрович",
+      "last_name": "",
+      "email": "tigr@mail.ru",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2025-07-11T12:15:10Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]

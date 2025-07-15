@@ -1,0 +1,38 @@
+[
+  {
+    "model": "myauth.profile",
+    "pk": 1,
+    "fields": {
+      "is_deleted": false,
+      "user": 1,
+      "fullName": "Vadim Bakhtiarov",
+      "email": "v190629101609@gmail.com",
+      "phone": "89773395044",
+      "avatar": "images_1/avatar/photo_2025-03-04_22-05-28_nA14sVG.jpg"
+    }
+  },
+  {
+    "model": "myauth.profile",
+    "pk": 4,
+    "fields": {
+      "is_deleted": false,
+      "user": 2,
+      "fullName": "Сова",
+      "email": "ol@mail.ru",
+      "phone": "89773395045",
+      "avatar": "images_None/avatar/Сова.jpg"
+    }
+  },
+  {
+    "model": "myauth.profile",
+    "pk": 5,
+    "fields": {
+      "is_deleted": false,
+      "user": 3,
+      "fullName": "Тигр Тигрович",
+      "email": "tigr@mail.ru",
+      "phone": "89773395046",
+      "avatar": "images_5/avatar/тигры.jpg"
+    }
+  }
+]

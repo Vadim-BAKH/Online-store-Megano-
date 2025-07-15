@@ -1,0 +1,54 @@
+[
+  {
+    "model": "shop.review",
+    "pk": 1,
+    "fields": {
+      "is_deleted": false,
+      "product": 4,
+      "author": "Ваня",
+      "email": "van@mail.ru",
+      "text": "Волшебный",
+      "rate": 5,
+      "date": "2025-07-11T12:03:01.889Z"
+    }
+  },
+  {
+    "model": "shop.review",
+    "pk": 2,
+    "fields": {
+      "is_deleted": false,
+      "product": 5,
+      "author": "Сова",
+      "email": "ol@mail.ru",
+      "text": "Торт не очень",
+      "rate": 4,
+      "date": "2025-07-11T12:06:28.677Z"
+    }
+  },
+  {
+    "model": "shop.review",
+    "pk": 3,
+    "fields": {
+      "is_deleted": false,
+      "product": 1,
+      "author": "Сова",
+      "email": "ol@mail.ru",
+      "text": "Люблю такой",
+      "rate": 5,
+      "date": "2025-07-11T12:14:07.936Z"
+    }
+  },
+  {
+    "model": "shop.review",
+    "pk": 4,
+    "fields": {
+      "is_deleted": false,
+      "product": 2,
+      "author": "Тигр Тигрович",
+      "email": "tigr@mail.ru",
+      "text": "Сырой",
+      "rate": 3,
+      "date": "2025-07-11T12:17:07.923Z"
+    }
+  }
+]

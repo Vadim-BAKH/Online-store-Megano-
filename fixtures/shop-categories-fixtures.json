@@ -1,0 +1,79 @@
+[
+  {
+    "model": "shop.category",
+    "pk": 1,
+    "fields": {
+      "is_deleted": false,
+      "title": "Хлебобулочные",
+      "parent": null,
+      "src": "images_None/category/Хлебобулочные_oZKhHwS.jfif",
+      "alt": "Мучные продукты"
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 2,
+    "fields": {
+      "is_deleted": false,
+      "title": "Хлеб",
+      "parent": 1,
+      "src": "images_None/category/Хлеб_EX7gfGa.jfif",
+      "alt": "Хлебные изделия"
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 3,
+    "fields": {
+      "is_deleted": false,
+      "title": "Пряники",
+      "parent": 1,
+      "src": "images_None/category/Пряники_teur6sE.jfif",
+      "alt": "Прянички"
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 4,
+    "fields": {
+      "is_deleted": false,
+      "title": "Десерт",
+      "parent": null,
+      "src": "images_None/category/Торты_и_пирожные_YYbyLvE.jfif",
+      "alt": "Десерты"
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 5,
+    "fields": {
+      "is_deleted": false,
+      "title": "Торты",
+      "parent": 4,
+      "src": "images_None/category/торты_8SmISff.jfif",
+      "alt": "Торты"
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 6,
+    "fields": {
+      "is_deleted": false,
+      "title": "Мороженное",
+      "parent": 4,
+      "src": "images_None/category/мороженное_z5hkRwu.jfif",
+      "alt": "Мороженное"
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 7,
+    "fields": {
+      "is_deleted": false,
+      "title": "Пирожные",
+      "parent": 4,
+      "src": "images_None/category/эклер_вишня-шоколад_5abb4NX.jpg",
+      "alt": "Прирожные"
+    }
+  }
+]

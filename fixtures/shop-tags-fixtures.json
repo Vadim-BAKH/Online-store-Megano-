@@ -1,0 +1,122 @@
+[
+  {
+    "model": "shop.tag",
+    "pk": 1,
+    "fields": {
+      "is_deleted": false,
+      "name": "хлеб"
+    }
+  },
+  {
+    "model": "shop.tag",
+    "pk": 2,
+    "fields": {
+      "is_deleted": false,
+      "name": "мёд"
+    }
+  },
+  {
+    "model": "shop.tag",
+    "pk": 3,
+    "fields": {
+      "is_deleted": false,
+      "name": "тмин"
+    }
+  },
+  {
+    "model": "shop.tag",
+    "pk": 4,
+    "fields": {
+      "is_deleted": false,
+      "name": "Зерна"
+    }
+  },
+  {
+    "model": "shop.tag",
+    "pk": 5,
+    "fields": {
+      "is_deleted": false,
+      "name": "семечки"
+    }
+  },
+  {
+    "model": "shop.tag",
+    "pk": 6,
+    "fields": {
+      "is_deleted": false,
+      "name": "имбирь"
+    }
+  },
+  {
+    "model": "shop.tag",
+    "pk": 7,
+    "fields": {
+      "is_deleted": false,
+      "name": "пряник"
+    }
+  },
+  {
+    "model": "shop.tag",
+    "pk": 8,
+    "fields": {
+      "is_deleted": false,
+      "name": "мука"
+    }
+  },
+  {
+    "model": "shop.tag",
+    "pk": 9,
+    "fields": {
+      "is_deleted": false,
+      "name": "тульский"
+    }
+  },
+  {
+    "model": "shop.tag",
+    "pk": 10,
+    "fields": {
+      "is_deleted": false,
+      "name": "шоколад"
+    }
+  },
+  {
+    "model": "shop.tag",
+    "pk": 11,
+    "fields": {
+      "is_deleted": false,
+      "name": "мороженное"
+    }
+  },
+  {
+    "model": "shop.tag",
+    "pk": 12,
+    "fields": {
+      "is_deleted": false,
+      "name": "на палочке"
+    }
+  },
+  {
+    "model": "shop.tag",
+    "pk": 13,
+    "fields": {
+      "is_deleted": false,
+      "name": "крем"
+    }
+  },
+  {
+    "model": "shop.tag",
+    "pk": 14,
+    "fields": {
+      "is_deleted": false,
+      "name": "заварной"
+    }
+  },
+  {
+    "model": "shop.tag",
+    "pk": 15,
+    "fields": {
+      "is_deleted": false,
+      "name": "черника"
+    }
+  }
+]

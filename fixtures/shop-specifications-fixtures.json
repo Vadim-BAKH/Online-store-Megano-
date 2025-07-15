@@ -1,0 +1,142 @@
+[
+  {
+    "model": "shop.specification",
+    "pk": 1,
+    "fields": {
+      "is_deleted": false,
+      "product": 1,
+      "name": "Форма",
+      "value": "кирпич"
+    }
+  },
+  {
+    "model": "shop.specification",
+    "pk": 2,
+    "fields": {
+      "is_deleted": false,
+      "product": 1,
+      "name": "структура",
+      "value": "мука"
+    }
+  },
+  {
+    "model": "shop.specification",
+    "pk": 3,
+    "fields": {
+      "is_deleted": false,
+      "product": 2,
+      "name": "Форма",
+      "value": "Каравай"
+    }
+  },
+  {
+    "model": "shop.specification",
+    "pk": 4,
+    "fields": {
+      "is_deleted": false,
+      "product": 2,
+      "name": "структура",
+      "value": "мука"
+    }
+  },
+  {
+    "model": "shop.specification",
+    "pk": 5,
+    "fields": {
+      "is_deleted": false,
+      "product": 3,
+      "name": "Форма",
+      "value": "форма"
+    }
+  },
+  {
+    "model": "shop.specification",
+    "pk": 6,
+    "fields": {
+      "is_deleted": false,
+      "product": 3,
+      "name": "структура",
+      "value": "мёд"
+    }
+  },
+  {
+    "model": "shop.specification",
+    "pk": 7,
+    "fields": {
+      "is_deleted": false,
+      "product": 4,
+      "name": "Форма",
+      "value": "плитка"
+    }
+  },
+  {
+    "model": "shop.specification",
+    "pk": 8,
+    "fields": {
+      "is_deleted": false,
+      "product": 4,
+      "name": "структура",
+      "value": "мёд"
+    }
+  },
+  {
+    "model": "shop.specification",
+    "pk": 9,
+    "fields": {
+      "is_deleted": false,
+      "product": 5,
+      "name": "Форма",
+      "value": "торт"
+    }
+  },
+  {
+    "model": "shop.specification",
+    "pk": 10,
+    "fields": {
+      "is_deleted": false,
+      "product": 5,
+      "name": "структура",
+      "value": "слои"
+    }
+  },
+  {
+    "model": "shop.specification",
+    "pk": 11,
+    "fields": {
+      "is_deleted": false,
+      "product": 6,
+      "name": "Форма",
+      "value": "брикет"
+    }
+  },
+  {
+    "model": "shop.specification",
+    "pk": 12,
+    "fields": {
+      "is_deleted": false,
+      "product": 6,
+      "name": "структура",
+      "value": "сливки"
+    }
+  },
+  {
+    "model": "shop.specification",
+    "pk": 13,
+    "fields": {
+      "is_deleted": false,
+      "product": 7,
+      "name": "Форма",
+      "value": "Пироженка"
+    }
+  },
+  {
+    "model": "shop.specification",
+    "pk": 14,
+    "fields": {
+      "is_deleted": false,
+      "product": 7,
+      "name": "структура",
+      "value": "крем"
+    }
+  }
+]
