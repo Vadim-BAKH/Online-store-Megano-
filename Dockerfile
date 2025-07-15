@@ -7,9 +7,14 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y libpq-dev gcc curl && rm -rf /var/lib/apt/lists/*
 RUN pip install --upgrade pip
-RUN curl -sSL https://install.python-poetry.org | python3
-
 ENV PATH="/root/.local/bin:$PATH"
+
+RUN curl -sSL https://install.python-poetry.org -o install-poetry.py && \
+    python3 install-poetry.py && \
+    ln -s /root/.local/bin/poetry /usr/local/bin/poetry && \
+    poetry config virtualenvs.create false
+
+
 ENV POETRY_VIRTUALENVS_CREATE=false
 
 COPY pyproject.toml poetry.lock README.md ./
