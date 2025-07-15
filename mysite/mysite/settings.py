@@ -10,55 +10,45 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import mimetypes
 import sys
 from os import getenv
-
-
-from dotenv import load_dotenv
 from pathlib import Path
+
 import sentry_sdk
-from loguru import logger
 from django.urls import reverse_lazy
-import mimetypes
+from dotenv import load_dotenv
+from loguru import logger
 
-
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv()
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-# SECURITY WARNING: keep the secret key used in production secret!
-
 
 SECRET_KEY = getenv("DJANGO_SECRET_KEY")
 if not SECRET_KEY:
     raise Exception("DJANGO_SECRET_KEY environment variable not set!")
 
-# SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = getenv("DJANGO_DEBUG", "0") == "1"
 
 allowed_host_env = getenv("DJANGO_ALLOWED_HOSTS", "")
 ALLOWED_HOSTS = [
-    "0.0.0.0", "127.0.0.1", "localhost",
-] + [
-    host for host in allowed_host_env.split(",") if host
-]
+    "0.0.0.0",
+    "127.0.0.1",
+    "localhost",
+] + [host for host in allowed_host_env.split(",") if host]
 
 mimetypes.add_type("application/javascript", ".js", True)
 
-INTERNAL_IPS = [
-    "127.0.0.1"
-]
+INTERNAL_IPS = ["127.0.0.1"]
 
 if DEBUG:
     import socket
+
     hostname, unused, ips = socket.gethostbyname_ex(socket.gethostname())
     INTERNAL_IPS.append("10.0.2.2")
     INTERNAL_IPS.extend([ip[: ip.rfind(".")] + ".1" for ip in ips])
 
-# Application definition
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -67,11 +57,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "frontend",
     "myauth.apps.MyauthConfig",
     "shop.apps.ShopConfig",
-
     "corsheaders",
     "rest_framework",
     "drf_spectacular",
@@ -93,12 +81,6 @@ MIDDLEWARE = [
     "django.contrib.admindocs.middleware.XViewMiddleware",
 ]
 
-# Документация по CORS и django-cors-headers:
-# - django-cors-headers PyPI: https://pypi.org/project/django-cors-headers/
-# - Руководство MDN по CORS: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
-# - Пошаговое руководство по включению CORS в Django REST Framework:
-#   https://sky.pro/wiki/python/vklyuchenie-cors-v-django-rest-framework-poshagovoe-rukovodstvo/
-# - Обзор и настройка CORS в Django: https://external.software/archives/16870
 cors_origins = getenv("CORS_ALLOWED_ORIGINS", "")
 CORS_ALLOWED_ORIGINS = [
     cors.strip() for cors in cors_origins.split(",") if cors.strip()
@@ -124,19 +106,17 @@ CORS_ALLOW_HEADERS = [
     "accept-encoding",
     "accept-language",
     "referer",
-    # добавляйте свои заголовки, если нужно
 ]
 
-CORS_ALLOW_CREDENTIALS = getenv(
-    "CORS_ALLOW_CREDENTIALS", "False"
-).lower() in ("true", "1", "yes")
+CORS_ALLOW_CREDENTIALS = getenv("CORS_ALLOW_CREDENTIALS", "False").lower() in (
+    "true",
+    "1",
+    "yes",
+)
 
 if DEBUG:
     INSTALLED_APPS.append("debug_toolbar")
-    MIDDLEWARE.insert(
-        1,
-        "debug_toolbar.middleware.DebugToolbarMiddleware"
-    )
+    MIDDLEWARE.insert(1, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
 
 ROOT_URLCONF = "mysite.urls"
@@ -159,9 +139,6 @@ TEMPLATES = [
 WSGI_APPLICATION = "mysite.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -177,9 +154,6 @@ DATABASES = {
     },
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -198,11 +172,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 redis_url = getenv("REDIS_URL", "redis://127.0.0.1:6379/1")
 CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': redis_url,
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": redis_url,
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },
         "TIMEOUT": 100,
     },
@@ -215,9 +189,6 @@ if SENTRY_DSN:
         send_default_pii=True,
     )
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
-
 LANGUAGE_CODE = "ru"
 
 TIME_ZONE = "UTC"
@@ -229,26 +200,23 @@ USE_TZ = True
 USE_L10N = True
 
 LOCALE_PATH = [BASE_DIR / "locale/"]
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-# STATICFILES_DIRS = [BASE_DIR / "frontend_static"]
+
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media_uploads"
 
-LOGIN_REDIRECT_URL = reverse_lazy("api:profile_update")
-LOGIN_URL = reverse_lazy("api:login")
+LOGIN_REDIRECT_URL = reverse_lazy("profile")
+LOGIN_URL = reverse_lazy("sign-in")
 
-# APPEND_SLASH = False
 
 LOGLEVEL = getenv("LOGLEVEL", "INFO").upper()
 logger.remove()
 logger.add(
-    sys.stdout,
+    sys.stderr,
     format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {name} | {message}",
     level=LOGLEVEL,
 )
@@ -260,6 +228,9 @@ REST_FRAMEWORK = {
         "django_filters.rest_framework.DjangoFilterBackend",
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+    ],
 }
 
 SPECTACULAR_SETTINGS = {
@@ -268,8 +239,6 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
 }
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -290,8 +259,11 @@ PASSWORD_HASHERS = [
 #     SECURE_BROWSER_XSS_FILTER = True
 #     SECURE_CONTENT_TYPE_NOSNIFF = True
 
+
 def show_toolbar(request):
+    """Вызывает показ toolbar."""
     return True
+
 
 DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": show_toolbar,
