@@ -15,7 +15,7 @@
           </h1>
           <ul class="breadcrumbs Middle-breadcrumbs">
             <li class="breadcrumbs-item"><a href="/">home</a></li>
-            <li class="breadcrumbs-item"><a href="{% url 'api:personal_office' %}">Личный кабинет</a></li>
+            <li class="breadcrumbs-item"><a href="{% url 'my:personal_office' %}">Личный кабинет</a></li>
             <li class="breadcrumbs-item"><a href="{% url 'shop:products_table' %}">Таблица товаров</a></li>
           </ul>
         </div>
@@ -69,6 +69,12 @@
                   <p>{{ form.freeDelivery.label_tag }}<br>{{ form.freeDelivery }}</p>
                   <p>{{ form.tags.label_tag }}<br>{{ form.tags }}</p>
                   <p>{{ form.new_tags.label_tag }}<br>{{ form.new_tags }}</p>
+                  <p>
+                    {{ form.limited_edition.label_tag }}<br>
+                    {{ form.limited_edition.help_text }}<br>
+                    {{ form.limited_edition }}
+
+                  </p>
 
                   <h3>Изображения товара</h3>
                   {{ image_formset.management_form }}
