@@ -7,6 +7,7 @@ from .models import Profile
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
+
     """
     Админ-класс для модели Profile.
 

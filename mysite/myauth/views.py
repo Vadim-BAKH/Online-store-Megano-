@@ -1,1 +1,3 @@
-from ._views import *
+"""Инициализация вью."""
+
+from ._views import *  # noqa

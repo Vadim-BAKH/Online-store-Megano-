@@ -10,7 +10,7 @@
           <ul class="breadcrumbs Middle-breadcrumbs">
             <li class="breadcrumbs-item"><a href="/">Home</a></li>
             <li class="breadcrumbs-item breadcrumbs-item_current"><span>Личный кабинет</span></li>
-             <li class="breadcrumbs-item"><a href="{% url 'api:profile_update' %}">Редактирование профиля</a></li>
+             <li class="breadcrumbs-item"><a href="/profile">Редактирование профиля</a></li>
              {% if user.is_staff %}
              <li class="breadcrumbs-item"><a href="{% url 'shop:products_table' %}">Таблица товаров</a></li>
              <li class="breadcrumbs-item"><a href="{% url 'shop:create_product' %}">Создать товар</a></li>
@@ -33,7 +33,7 @@
             <div class="Section-columnContent">
               <div class="NavigateProfile">
                 <ul class="menu menu_vt">
-                  <li class="menu-item"><a class="menu-link" href="{% url 'api:profile_update' %}">Профиль</a></li>
+                  <li class="menu-item"><a class="menu-link" href="/profile">Профиль</a></li>
                   <li class="menu-item"><a class="menu-link" href="/history-order">История заказов</a></li>
                 </ul>
               </div>
@@ -52,7 +52,7 @@
                     <img src="{{ profile.avatar.url }}" alt="Аватар" style="max-width:150px; margin-bottom:10px;">
                   {% endif %}
                   <p><strong>ФИО:</strong> {{ profile.fullName }}</p>
-<!--                  <a href="{% url 'api:profile_update' %}">Редактировать профиль</a>-->
+<!--                  <a href="{% url 'profile' %}">Редактировать профиль</a>-->
                 </div>
               </div>
 
@@ -60,10 +60,17 @@
               <div class="row-block">
                 {% if last_order %}
                   <h2>Последний заказ</h2>
-                  <p>Номер заказа: {{ last_order.id }}</p>
-                  <p>Дата: {{ last_order.date }}</p>
-                  <a href="{% url 'order_detail' last_order.id %}">Детали заказа</a><br>
-                  <a href="{% url 'order_history' %}">История заказов</a>
+                     <div class="row-block">
+                      <a class="Order-title" href="/orders/{{ last_order.id }}/">
+                        Ваш крайний заказ от {{ last_order.created_at|date:"d.m.Y H:i" }}
+                      </a>
+
+                    </div>
+<!--&lt;!&ndash;                   -->
+<!--                  <p>Номер заказа: {{ last_order.id }}</p>-->
+<!--&lt;!&ndash;                  <p>Дата: {{ last_order.date }}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <a href="{% url 'detail_order' last_order.id %}">Детали заказа</a><br>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <a href="{% url 'order_history' %}">История заказов</a>&ndash;&gt;-->
                 {% else %}
                   <p>У вас пока нет заказов.</p>
                 {% endif %}
