@@ -158,6 +158,14 @@
 
 При просмотре деталей товара, можно оставлять отзыв.
 
+Не авторизованный пользователь не сможет оставить отзыв:
+<img width="1920" height="955" alt="image" src="https://github.com/user-attachments/assets/f9bfe7fb-6955-4774-8659-d043c6642353" />
+
+После авторизации можно оставить отзыв:
+<img width="1920" height="889" alt="image" src="https://github.com/user-attachments/assets/6295f412-f690-46c0-89ea-b7593baa42c5" />
+<img width="1920" height="941" alt="image" src="https://github.com/user-attachments/assets/f9f4cc38-194a-4a59-898b-5e01a49a7da4" />
+
+
 #### CRUD Product в "админке"
 
 При необходимости можно изменить или добавить категории:
