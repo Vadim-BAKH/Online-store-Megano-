@@ -1,31 +1,62 @@
-
+"""Представление для обновления товара по ID через форму."""
 
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.shortcuts import render, redirect
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView
 from loguru import logger
 
 from .._models import Product
 from ..forms import ProductForm
-from ..product_mixin import ProductMixin
+from ..product_utils.product_mixin import ProductMixin
 
-class ProductUpdateView(ProductMixin, UserPassesTestMixin, UpdateView):
+
+class ProductUpdateView(
+    ProductMixin,
+    UserPassesTestMixin,
+    UpdateView,
+):
+
+    """Представление обновления товара для персонала."""
+
     model = Product
     form_class = ProductForm
     template_name = "shop/product_manager.html"
     success_url = reverse_lazy("shop:products_table")
 
-    def test_func(self):
+    def test_func(self) -> bool:
+        """Разрешает доступ только администраторам."""
         return self.request.user.is_staff
 
-    def get(self, request, *args, **kwargs):
+    def get_queryset(self):
+        """
+        Возвращает все товары, включая мягко удалённые.
+
+        Используется кастомный менеджер `Product.all_objects`.
+        """
+        return Product.all_objects.all()
+
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        """
+        Обработка GET-запроса: отображение формы редактирования товара.
+
+        Args:
+            request: объект запроса.
+
+        Returns:
+            HTML-страница с формами.
+
+        """
         product = self.get_object()
         initial = self._get_category_initial(product)
 
         form = self.form_class(instance=product, initial=initial)
-        image_formset, spec_formset = self.get_formsets(request, product)
+        image_formset, spec_formset = self.get_formsets(
+            request,
+            product,
+        )
 
         context = {
             "form": form,
@@ -35,44 +66,98 @@ class ProductUpdateView(ProductMixin, UserPassesTestMixin, UpdateView):
         }
         return render(request, self.template_name, context)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        """
+        Обработка POST-запроса: обновление товара и его формсетов.
+
+        Args:
+            request: объект запроса.
+
+        Returns:
+            Редирект при успехе или повторный рендер формы с ошибками.
+
+        """
         product = self.get_object()
-        form = self.form_class(request.POST, request.FILES, instance=product)
-        image_formset, spec_formset = self.get_formsets(request, product)
+        form = self.form_class(
+            request.POST,
+            request.FILES,
+            instance=product,
+        )
+        image_formset, spec_formset = self.get_formsets(
+            request,
+            product,
+        )
 
         if form.is_valid() and image_formset.is_valid() and spec_formset.is_valid():
             cd = form.cleaned_data
 
             # Получаем или создаём категории через миксин
-            category, subcategory = self.get_or_create_categories(cd, form)
+            category, subcategory = self.get_or_create_categories(
+                cd,
+                form,
+            )
             if not (subcategory or category):
-                return self._handle_validation_error(request, form, image_formset, spec_formset, product)
+                return self._handle_validation_error(
+                    request,
+                    form,
+                    image_formset,
+                    spec_formset,
+                    product,
+                )
 
             # Присваиваем категорию товару
             form.instance.category = subcategory if subcategory else category
 
             product = form.save()
-            self.handle_tags(product, cd.get('new_tags', ''))
+            self.handle_tags(product, cd.get("new_tags", ""))
             self.handle_formsets(product, image_formset, spec_formset)
 
             logger.debug(f"Товар {product.title} обновлён.")
             messages.success(request, f"Товар {product.title} успешно обновлён")
             return redirect(self.success_url)
 
-        return self._handle_validation_error(request, form, image_formset, spec_formset, product)
+        return self._handle_validation_error(
+            request, form, image_formset, spec_formset, product
+        )
 
-    def _get_category_initial(self, product):
+    def _get_category_initial(self, product: Product) -> dict:
+        """
+        Возвращает значения для полей `category` и `subcategory.
+
+        Args:
+            product: текущий товар.
+
+        Returns:
+            Словарь с начальными значениями.
+
+        """
         initial = {}
         if product.category:
             if product.category.parent is None:
-                initial['category'] = product.category
-                initial['subcategory'] = None
+                initial["category"] = product.category
+                initial["subcategory"] = None
             else:
-                initial['category'] = product.category.parent
-                initial['subcategory'] = product.category
+                initial["category"] = product.category.parent
+                initial["subcategory"] = product.category
         return initial
 
-    def _handle_validation_error(self, request, form, image_formset, spec_formset, product):
+    def _handle_validation_error(
+        self, request, form, image_formset, spec_formset, product
+    ):
+        """
+        Обрабатывает невалидные данные формы.
+
+        Args:
+            request: объект запроса.
+            form: основная форма товара.
+            image_formset: формсет изображений.
+            spec_formset: формсет спецификаций.
+            product: товар.
+
+        Returns:
+            HTML-страница с формой и ошибками.
+
+        """
         logger.error(f"Ошибки при обновлении: {form.errors}")
         context = {
             "form": form,
@@ -81,149 +166,3 @@ class ProductUpdateView(ProductMixin, UserPassesTestMixin, UpdateView):
             "product": product,
         }
         return render(request, self.template_name, context)
-
-# class ProductUpdateView(UserPassesTestMixin, UpdateView):
-#     model = Product
-#     template_name = "shop/product_manager.html"
-#     success_url = reverse_lazy("shop:products_table")
-#
-#     def test_func(self):
-#         return self.request.user.is_staff
-#
-#     def get(self, request, *args, **kwargs):
-#         pk = kwargs.get("pk")
-#         product = get_object_or_404(Product, pk=pk)
-#
-#         initial = {}
-#         if product.category:
-#             if product.category.parent is None:
-#                 # Категория — корневая
-#                 initial['category'] = product.category
-#                 initial['subcategory'] = None
-#             else:
-#                 # Категория — подкатегория
-#                 initial['category'] = product.category.parent
-#                 initial['subcategory'] = product.category
-#
-#         form = ProductForm(instance=product, initial=initial)
-#         image_formset = ProductImageFormSet(queryset=ProductImage.objects.filter(product=product))
-#         spec_formset = SpecificationFormSet(queryset=Specification.objects.filter(product=product))
-#
-#         context = {
-#             "form": form,
-#             "image_formset": image_formset,
-#             "spec_formset": spec_formset,
-#             "product": product,
-#         }
-#         logger.debug(f"Товар {product.title} открыт для редактирования")
-#         return render(request, self.template_name, context)
-#
-#     def post(self, request, *args, **kwargs):
-#         pk = kwargs.get("pk")
-#         product = get_object_or_404(Product, pk=pk)
-#
-#         form = ProductForm(request.POST, request.FILES, instance=product)
-#         image_formset = ProductImageFormSet(
-#             request.POST,
-#             request.FILES,
-#             queryset=ProductImage.objects.filter(product=product)
-#         )
-#         spec_formset = SpecificationFormSet(
-#             request.POST,
-#             queryset=Specification.objects.filter(product=product)
-#         )
-#
-#         if form.is_valid() and image_formset.is_valid() and spec_formset.is_valid():
-#             cd = form.cleaned_data
-#
-#             # Определяем корневую категорию
-#             category = None
-#             if cd.get('new_category'):
-#                 category, created = Category.objects.get_or_create(
-#                     title=cd['new_category'],
-#                     parent=None,
-#                     defaults={
-#                         "src": cd.get("new_category_image"),
-#                         "alt": cd.get("new_category_alt") or cd['new_category']
-#                     }
-#                 )
-#             elif cd.get('category'):
-#                 category = cd['category']
-#
-#             # Определяем подкатегорию
-#             subcategory = None
-#             if cd.get('new_subcategory'):
-#                 if not category:
-#                     form.add_error('new_subcategory', 'Для создания подкатегории нужна корневая категория')
-#                     context = {
-#                         "form": form,
-#                         "image_formset": image_formset,
-#                         "spec_formset": spec_formset,
-#                         "product": product,
-#                     }
-#                     return render(request, self.template_name, context)
-#                 subcategory, created = Category.objects.get_or_create(
-#                     title=cd['new_subcategory'],
-#                     parent=category,
-#                     defaults={
-#                         "src": cd.get("new_subcategory_image"),
-#                         "alt": cd.get("new_subcategory_alt") or cd['new_subcategory']
-#                     }
-#                 )
-#             elif cd.get('subcategory'):
-#                 subcategory = cd['subcategory']
-#
-#             # Присваиваем категорию: подкатегорию, если есть, иначе корневую
-#             if subcategory:
-#                 form.instance.category = subcategory
-#             elif category:
-#                 form.instance.category = category
-#             else:
-#                 form.add_error('category', 'Необходимо выбрать категорию или подкатегорию')
-#                 context = {
-#                     "form": form,
-#                     "image_formset": image_formset,
-#                     "spec_formset": spec_formset,
-#                     "product": product,
-#                 }
-#                 return render(request, self.template_name, context)
-#
-#             product = form.save()
-#
-#             # Обработка новых тегов
-#             new_tags_str = cd.get('new_tags', '')
-#             if new_tags_str:
-#                 tag_names = [tag.strip() for tag in new_tags_str.split(',') if tag.strip()]
-#                 for name in tag_names:
-#                     tag, created = Tag.objects.get_or_create(name=name)
-#                     product.tags.add(tag)
-#
-#             # Сохраняем formset’ы, назначая instance
-#             image_formset.instance = product
-#             image_formset.save()
-#
-#             spec_formset.instance = product
-#             spec_formset.save()
-#
-#             logger.debug(f"Товар {product.title} обновлён")
-#             messages.success(request, f"Товар {product.title} успешно обновлён")
-#             return redirect(self.success_url)
-#         else:
-#             # При ошибках повторно инициализируем initial
-#             initial = {}
-#             if product.category:
-#                 if product.category.parent is None:
-#                     initial['category'] = product.category
-#                     initial['subcategory'] = None
-#                 else:
-#                     initial['category'] = product.category.parent
-#                     initial['subcategory'] = product.category
-#             form = ProductForm(request.POST, request.FILES, instance=product, initial=initial)
-#
-#             context = {
-#                 "form": form,
-#                 "image_formset": image_formset,
-#                 "spec_formset": spec_formset,
-#                 "product": product,
-#             }
-#             return render(request, self.template_name, context)

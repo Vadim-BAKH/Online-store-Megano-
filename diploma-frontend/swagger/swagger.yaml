@@ -890,9 +890,3 @@ components:
         alt:
           type: string
           example: 'Image alt string'
-
-
-
-
-
-

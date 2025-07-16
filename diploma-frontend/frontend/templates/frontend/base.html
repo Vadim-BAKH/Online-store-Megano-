@@ -28,6 +28,18 @@
   <script defer src="{% static 'frontend/assets/plg/range/ion.rangeSlider.min.js' %}"></script>
   <script defer src="{% static 'frontend/assets/plg/Slider/slick.min.js' %}"></script>
   <script defer src="{% static 'frontend/assets/js/scripts.js' %}"></script>
+  <style>
+    .best-href {
+            color: green;
+            text-decoration: none;
+            padding: 10px;
+            margin-right: 20px;
+        }
+        .best-href:hover {
+            color: rgba(255, 0, 157, 0.795);
+            text-decoration: underline;
+        }
+  </style>
 </head>
 <body class="Site" id="site">
   <header class="Header">
@@ -51,18 +63,17 @@
           </div>
           <nav class="row-block">
             <div class="row ControlPanel-rowSplit">
-              {% if user.is_authenticated %}
-                <div class="row-block">
-                  <a class="ControlPanel-title" href="{% url 'api:personal_office' %}">{{ user.username }}</a>
-                </div>
-                <div class="row-block">
-                  <a class="ControlPanel-title" href="{% url 'api:logout' %}">Log out</a>
-                </div>
-              {% else %}
-                <div class="row-block">
-                  <a class="ControlPanel-title" href="{% url 'api:login' %}">Login / Register</a>
-                </div>
-              {% endif %}
+               {% if user.is_authenticated %}
+                  <div class="row-block">
+                    <a class="ControlPanel-title" href="{% url 'my:personal_office' %}">{{ user.username }}</a>
+                  </div>
+                  <div class="row-block">
+                    <a class="ControlPanel-title" href="#" @click.prevent="signOut()">Log out</a>
+                  </div>
+                {% else %}
+                  <div class="row-block"><a class="ControlPanel-title" href="/sign-in">Login / Register</a></div>
+                {% endif %}
+
             </div>
           </nav>
 

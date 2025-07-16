@@ -33,22 +33,37 @@ dependencies = [
 
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
+requires = ["poetry-core>=2.0.0,<3.0.0", "setuptools>=65.6.3,<81.0.0",]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.5"
 black = "^25.1.0"
 ruff = "^0.11.9"
-flake8 = "^7.2.0"
-pylint = "^3.3.7"
 isort = "^6.0.1"
 pytest-cov = "^6.1.1"
-flake8-docstrings = "^1.7.0"
 django-debug-toolbar = "^5.2.0"
+pytest-django = "^4.11.1"
+pre-commit = "^4.2.0"
 
-[tool.pylint."MESSAGES CONTROL"]
-disable = """
-    E1101,
-    W0613
-"""
+[tool.ruff]
+line-length = 79
+target-version = "py312"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "D"]
+ignore = ["D107", "D211", "D212", "E501", "D417"]
+
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "mysite.settings"
+python_files = "test_*.py"
+addopts = "-ra -q"
+markers = [
+    "django_db: mark the test as using the Django database",
+]

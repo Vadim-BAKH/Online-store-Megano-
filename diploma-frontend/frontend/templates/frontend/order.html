@@ -1,4 +1,4 @@
-{% extends "frontend/base.html" %}
+ {% extends "frontend/base.html" %}
 {% load static %}
 
 {% block content %}
@@ -106,7 +106,7 @@
               <div class="form-group">
                 <div>
                   <label class="toggle">
-                    <input type="radio" v-model="paymentType" name="pay" value="online" checked="checked"/><span class="toggle-box"></span><span class="toggle-text">Онлайн картой</span>
+                    <input type="radio" v-model="paymentType" name="pay" value="online"/><span class="toggle-box"></span><span class="toggle-text">Онлайн картой</span>
                   </label>
                 </div>
                 <div>
@@ -206,9 +206,10 @@
                       <strong class="Cart-title">Итого:</strong>
                       <span class="Cart-price">${ products.reduce((acc, el) => {return acc += (el.price * el.count)}, 0) }$$</span>
                     </div>
-                    <div class="Cart-block">
+                    <div class="Cart-block" v-if="status !== 'paid'">
                       <button class="btn btn_primary btn_lg" type="submit">Оплатить</button>
                     </div>
+
                   </div>
                 </div>
               </div>
